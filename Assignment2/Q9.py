@@ -21,11 +21,25 @@ def bc3(ya, yb):
 def bc4(ya, yb):
     return np.array([ya[0] - 2, yb[0] - 2])
 
+
+
+# Original solution
+def original_solution1(x):
+    return np.log(x)
+def original_solution2(x):
+    return np.exp(np.sin(x))
+def original_solution3(x):
+    return np.sqrt(np.sin(x))
+def original_solution4(x):
+    return 2+np.sin(x)
+
+
+
 problems = [
-    {'fun': fun1, 'bc': bc1, 'x_span': np.linspace(1, 2, 1000), 'label': '$y\'\'=-e^{2y}$'},
-    {'fun': fun2, 'bc': bc2, 'x_span': np.linspace(0, np.pi/2, 1000), 'label': '$y\'\'= y\'\cos(x)-y \ln(y)$'},
-    {'fun': fun3, 'bc': bc3, 'x_span': np.linspace(np.pi/4, np.pi/3, 1000), 'label': '$y\'\'=-(2(y\')^3 +y^2 y\')$'},
-    {'fun': fun4, 'bc': bc4, 'x_span': np.linspace(0, np.pi, 1000), 'label': '$y\'\'=1/2 -(y\')^2/2 -y \sin(x)/2$'}
+    {'fun': fun1, 'bc': bc1, 'x_span': np.linspace(1, 2, 1000), 'label': '$y\'\'=-e^{2y}$','original solution':original_solution1},
+    {'fun': fun2, 'bc': bc2, 'x_span': np.linspace(0, np.pi/2, 1000), 'label': '$y\'\'= y\'\cos(x)-y \ln(y)$','original solution':original_solution2},
+    {'fun': fun3, 'bc': bc3, 'x_span': np.linspace(np.pi/4, np.pi/3, 1000), 'label': '$y\'\'=-(2(y\')^3 +y^2 y\')$','original solution':original_solution3},
+    {'fun': fun4, 'bc': bc4, 'x_span': np.linspace(0, np.pi, 1000), 'label': '$y\'\'=1/2 -(y\')^2/2 -y \sin(x)/2$','original solution':original_solution4}
 ]
 
 plt.figure(figsize=(10, 8))
@@ -36,7 +50,7 @@ for i, problem in enumerate(problems, start=1):
 
     plt.subplot(2, 2, i)
     plt.plot(sol.x, sol.y[0], label='Numerical solution by solve_bvp')
-    
+    plt.plot(problem['x_span'],problem['original solution'](problem['x_span']),ls='--',label='Analytical solution')
     plt.xlabel('x')
     plt.ylabel('y')
     plt.title('Solution of ' + problem['label'])
